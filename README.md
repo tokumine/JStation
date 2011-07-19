@@ -27,6 +27,7 @@ To play
 
 Todo
 -----
+* optimise sending touches to nodejs 
 * multiplayer
 * multitouch
 * multigame
