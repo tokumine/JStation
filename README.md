@@ -31,3 +31,7 @@ Todo
 * multitouch
 * multigame
 * multifun!
+
+Credits
+--------
+Large amounts of controller code from sebleedelisle / JSTouchController (http://goo.gl/sN8bS) 
