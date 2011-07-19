@@ -19,10 +19,10 @@ npm install
 
 To play
 --------
-edit your screen machine IP address in public/controller.html line 77
-on screen machine: node touch_server.js
-on screen machine: visit http://localhost:8080/screen.html
-on iOS device to play: visit http://SCREEN_MACHINE_IP:8080/controller.html
+* edit your screen machine IP address in public/controller.html line 77
+* on screen machine: node touch_server.js
+* on screen machine: visit http://localhost:8080/screen.html
+* on iOS device to play: visit http://SCREEN_MACHINE_IP:8080/controller.html
 
 
 Todo
