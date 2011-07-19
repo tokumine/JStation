@@ -7,13 +7,13 @@ Currently only plays 1 game with 1 touch event: http://vimeo.com/26552857
 
 Concepts
 ---------
-1 high power machine is the 'Screen' machine also running node.js
-1..n iOS webkit devices connect to screen machine node
+* 1 high power machine is the 'Screen' machine also running node.js
+* 1..n iOS webkit devices connect to screen machine node
 
 
 Install
 --------
-npm install
+* npm install
 
 
 To play
