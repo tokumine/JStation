@@ -3,8 +3,7 @@ JStation
 
 An quick hack to make a virtual browser based games console.
 
-Currently only plays 1 game with 1 touch event...
-
+Currently only plays 1 game with 1 touch event: http://vimeo.com/26552857
 
 Concepts
 ---------
