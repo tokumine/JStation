@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+    <head>
+      <script src="/socket.io/socket.io.js"></script>
+        <title>G</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <!-- <canvas id="c"></canvas> -->
+        <script>
+            var G = function(init, loop, options) {
+                function _init() {
+                    var doc = document, body = doc.body;
+                    var canvas = doc.createElement('canvas');
+                    body.appendChild(canvas);
+                    var width = innerWidth;
+                    var height = innerHeight;
+                    var widthHalf = width >> 1;
+                    var heightHalf = height >> 1;
+
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    var c = canvas.getContext( '2d' );
+                    c.width = width;
+                    c.height = height;
+                    c.translate( widthHalf, heightHalf );
+
+                    G.ctx = c;
+                    G.mouseX = 0;
+                    G.mouseY = 0;
+                    G.realmouseX = 0;
+                    G.realmouseY = 0;
+                    G.socket = io.connect('localhost');
+
+                    G.socket.on('touch', function (touch){
+                      var x_prop = touch.x / touch.screen_x;
+                      var y_prop = touch.y / touch.screen_y;
+                      //console.log(touch);
+                      
+                      G.realmouseX = ( x_prop * width ) - widthHalf;
+                      G.realmouseY = ( y_prop * height ) - heightHalf;
+                      G.mouseX = ( G.realmouseX ) / width;
+                      G.mouseY = ( G.realmouseY ) / height;
+                    });
+                    
+                    // doc.onmousemove = function (event) {
+                    //     G.realmouseX = ( event.clientX - widthHalf );
+                    //     G.realmouseY = ( event.clientY - heightHalf );
+                    //     G.mouseX = ( event.clientX - widthHalf ) / width;
+                    //     G.mouseY = ( event.clientY - heightHalf ) / height;
+                    // };
+                    G.width = width;
+                    G.height = height;
+
+                    init && init.apply(G);
+                    setInterval(function() {
+                            loop.apply(G);
+                    }, options && options.timeframe || 30);
+                }
+                _init();
+            }
+
+        </script>
+
+        <script>
+
+            sin = Math.sin, cos = Math.cos, pi = Math.PI;
+
+            G(function() {
+                document.body.style.margin = '0px';
+                document.body.style.overflow = 'hidden';
+                document.body.style.background = '#EEE';
+
+                this.split = 0;
+                this.lines = [];
+
+                this.crazy_line = function(from) {
+                    var c = this.ctx;
+                    c.strokeStyle= "rgba(0, 0, 0, 0.2)";
+                    c.beginPath();
+                    c.moveTo(from.x, from.y);
+                    var n = { x:from.x + 5*(2*Math.random() - 1) + G.mouseX*4,
+                              y:from.y + 5*(2*Math.random() - 1) + G.mouseY*4
+                    };
+                    var n = {
+                        x: from.x + (G.realmouseX - from.x)*0.2*from.vel,
+                        y: from.y + (G.realmouseY - from.y)*0.2*from.vel,
+                        vel: from.vel
+                    };
+                    c.lineTo(n.x, n.y);
+                    c.stroke();
+                    return n;
+                }
+                for(var i = 0; i < 100; ++i) {
+                    this.lines[i] = {x:0, y:0, vel: 0.2 + 0.5*Math.random()};
+                }
+
+            }, function() {
+                for(var i = 0; i < this.lines.length; ++i) {
+                    this.lines[i] = this.crazy_line(this.lines[i]);
+                }
+                this.split++;
+                if(this.split%1000 == 0) {
+                    for(var i = 0; i < this.lines.length; ++i) {
+                        if(Math.random() < 0.2) {
+                            this.lines.push({x: this.lines[i].x, y:this.lines[i].y, vel: 0.2 + 0.4*Math.random()});
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
